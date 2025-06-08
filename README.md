@@ -170,7 +170,7 @@ public PageInfo<Transaction> getAllTransactions(int page, int size) {
 #### 2. 启动步骤
 ```bash
 # 克隆项目
-git clone <repository-url>
+git clone https://github.com/stoneLee81/bank-transaction-app.git
 cd bank-transaction-app/backend
 
 # 编译并启动
