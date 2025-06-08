@@ -1,8 +1,15 @@
 # 银行交易管理系统 (Demo版本)
 
+[![GitHub](https://img.shields.io/badge/GitHub-stoneLee81/bank--transaction--app-blue?logo=github)](https://github.com/stoneLee81/bank-transaction-app)
+[![Docker](https://img.shields.io/badge/Docker-Ready-blue?logo=docker)](https://github.com/stoneLee81/bank-transaction-app)
+[![Flutter](https://img.shields.io/badge/Flutter-Multi--Platform-blue?logo=flutter)](https://github.com/stoneLee81/bank-transaction-app)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.2.3-green?logo=springboot)](https://github.com/stoneLee81/bank-transaction-app)
+
 ## 📋 项目简介
 
 这是一个基于 **纯内存缓存** 的银行交易管理系统Demo，专为演示和开发环境设计。经过最新架构优化，实现了高性能、高并发的交易处理能力。
+
+**🔗 GitHub仓库**: https://github.com/stoneLee81/bank-transaction-app
 
 ### 🎯 Demo特性
 - ✅ **纯内存存储** - 使用 ConcurrentLinkedDeque + ConcurrentHashMap 提供高性能缓存
@@ -101,7 +108,6 @@ docker rm bank-transaction-frontend
 - **交易列表页**：分页展示所有交易，支持多条件筛选、搜索、排序，点击可查看详情。
 - **新增交易页**：表单输入，支持金额、类型、账户、描述等字段校验，交互友好。
 - **修改交易页**：支持对已存在交易的编辑，自动填充原有数据，实时校验。
-- **删除交易功能**：支持单条和批量删除，带二次确认弹窗，防止误操作。
 
 #### 体验亮点
 - Material Design 3 风格，支持深色模式
@@ -160,21 +166,60 @@ public PageInfo<Transaction> getAllTransactions(int page, int size) {
 - **TransactionToolService**：统一管理缓存策略
 - **CacheTransactionDao**：简化为基础 CRUD 操作
 
+## 📁 项目结构
+
+```
+bank-transaction-app/
+├── README.md                    # 项目说明文档
+├── .gitignore                   # Git忽略文件配置
+├── .fvmrc                       # Flutter版本管理
+├── backend/                     # 后端Spring Boot项目
+│   ├── src/                     # Java源代码
+│   │   ├── main/java/           # 主要业务代码
+│   │   │   └── com/bank/transaction/
+│   │   │       ├── controller/  # REST API控制器
+│   │   │       ├── service/     # 业务逻辑层
+│   │   │       ├── dao/         # 数据访问层
+│   │   │       ├── model/       # 数据模型
+│   │   │       ├── config/      # 配置类
+│   │   │       └── util/        # 工具类
+│   │   └── test/                # 测试代码
+│   ├── pom.xml                  # Maven依赖配置
+│   ├── Dockerfile               # 后端Docker配置
+│   ├── docker-compose.yml       # 后端容器编排
+│   └── target/                  # 编译输出目录
+├── frontend/                    # 前端Flutter项目
+│   ├── lib/                     # Dart源代码
+│   │   ├── main.dart            # 应用入口
+│   │   └── src/                 # 主要代码
+│   │       ├── pages/           # 页面组件
+│   │       ├── models/          # 数据模型
+│   │       ├── provider/        # 状态管理
+│   │       ├── utils/           # 工具类
+│   │       └── widgets/         # UI组件
+│   ├── build/web/               # Web编译输出（已包含）
+│   ├── android/                 # Android平台配置
+│   ├── ios/                     # iOS平台配置
+│   ├── web/                     # Web平台配置
+│   ├── wechat/                  # 微信小程序配置
+│   ├── pubspec.yaml             # Flutter依赖配置
+│   ├── Dockerfile               # 前端Docker配置
+│   ├── nginx.conf               # Nginx配置
+│   └── docker-compose.yml       # 前端容器编排
+└── .vscode/                     # VS Code配置
+```
+
 ## 🚀 快速启动
 
-### 方式一：本地Java运行
+### 方式一：本地开发运行
 
-#### 1. 环境要求
-- Java 21+
-- Maven 3.8+
-
-#### 2. 启动步骤
+#### 后端启动
 ```bash
 # 克隆项目
-git clone <repository-url>
+git clone https://github.com/stoneLee81/bank-transaction-app.git
 cd bank-transaction-app/backend
 
-# 编译并启动
+# 环境要求：Java 21+, Maven 3.8+
 mvn spring-boot:run
 
 # 或者打包后启动
@@ -182,23 +227,60 @@ mvn clean package
 java -jar target/transaction-0.0.1-SNAPSHOT.jar
 ```
 
+#### 前端启动
+```bash
+# 进入前端目录
+cd frontend
+
+# 环境要求：Flutter 3.0+
+flutter pub get
+flutter run -d web  # Web版本
+flutter run         # 移动端版本
+```
+
 ### 方式二：Docker容器化部署
 
-#### 1. 环境要求
-- Docker 20.10+
-- Docker Compose 2.0+
-
-#### 2. 使用Docker Compose (推荐)
+#### 后端Docker部署
 ```bash
-# 克隆项目
-git clone <repository-url>
-cd bank-transaction-app/backend
+cd backend
+docker-compose up -d --build
 
-# 一键构建并启动
-docker-compose up -d
+# 访问后端API: http://localhost:8080
+```
 
-# 查看运行状态
-docker-compose ps
+#### 前端Docker部署
+```bash
+cd frontend
+docker-compose up -d --build
+
+# 访问前端Web: http://localhost:3000
+```
+
+#### 完整系统部署
+```bash
+# 同时启动前后端
+cd backend && docker-compose up -d --build
+cd ../frontend && docker-compose up -d --build
+
+# 验证部署状态
+docker ps  # 查看运行的容器
+curl http://localhost:8080/actuator/health  # 检查后端
+curl http://localhost:3000  # 检查前端
+```
+
+#### 🔍 部署验证
+```bash
+# 检查后端服务
+curl -X GET http://localhost:8080/api/transactions
+
+# 检查前端服务
+open http://localhost:3000  # macOS
+# 或在浏览器中访问 http://localhost:3000
+
+# 查看容器日志
+docker logs bank-transaction-app      # 后端日志
+docker logs bank-transaction-frontend # 前端日志
+```
 
 # 查看应用日志
 docker-compose logs -f bank-transaction-app
@@ -237,10 +319,25 @@ docker rm bank-transaction-app
 - ⚡ **JVM优化** - 容器环境优化的JVM参数
 - 📊 **资源限制** - 内存和CPU使用限制
 
-### 访问地址
+### 🌐 访问地址
+
+#### 后端服务 (端口: 8080)
 - **API文档**: http://localhost:8080/swagger-ui.html
 - **健康检查**: http://localhost:8080/actuator/health
 - **应用信息**: http://localhost:8080/actuator/info
+- **交易API**: http://localhost:8080/api/transactions
+
+#### 前端应用 (端口: 3000)
+- **Web界面**: http://localhost:3000
+- **移动端体验**: 响应式设计，支持手机访问
+- **桌面端体验**: 支持大屏显示和操作
+
+#### 完整系统架构
+```
+用户浏览器 → 前端(3000) → 后端API(8080) → 内存缓存
+    ↓              ↓              ↓
+  Web界面      Flutter Web    Spring Boot
+```
 
 ## 📚 API接口
 
