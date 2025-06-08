@@ -1,0 +1,69 @@
+# 应用配置
+server:
+  port: 8080
+  servlet:
+    context-path: /
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/plain
+
+spring:
+  application:
+    name: bank-transaction-service
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+  profiles:
+    active: dev
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+    tagsSorter: alpha
+    
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always 
+
+# 缓存配置 (Demo 使用内存缓存)
+storage:
+  cache:
+    max-size: 10000
+    expire-minutes: 60
+
+# 银行交易限额配置
+bank:
+  transaction:
+    limits:
+      # 单笔交易最高限额
+      single-transaction-limit: 50000
+      # 日累计交易限额
+      daily-transaction-limit: 200000
+      # 月累计交易限额
+      monthly-transaction-limit: 1000000
+      # 大额交易预警阈值
+      large-amount-threshold: 10000
+      # 最小交易金额
+      minimum-transaction-amount: 0.01
+      # 账户余额预警阈值
+      low-balance-threshold: 100
+      # 交易超时时间（秒）
+      transaction-timeout-seconds: 300
+      # 最大重试次数
+      max-retry-count: 3
+
+# 日志配置
+logging:
+  level:
+    com.bank.transaction: DEBUG
+    org.springframework.security: INFO 

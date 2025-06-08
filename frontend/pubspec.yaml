@@ -1,0 +1,40 @@
+name: bank_transaction_app
+description: 银行交易管理系统
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.6
+  http: ^1.1.0
+  provider: ^6.1.2
+  intl: ^0.19.0
+  dio: ^5.7.0
+  flutter_easyloading: ^3.0.5
+  responsive_builder: ^0.7.0
+  go_router: ^14.6.2
+  tuple: ^2.0.2
+  fluttertoast: ^8.2.8
+  json_annotation: ^4.8.1 
+  flutter_localizations:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  # flutter_lints: ^2.0.3
+  build_runner: ^2.1.5
+  json_serializable: ^6.6.2
+
+flutter:
+  uses-material-design: true
+  fonts:
+    - family: PingFang
+      fonts:
+        - asset: assets/fonts/NotoSansSC-Regular.ttf
+  assets:
+    - assets/images/icon_list_empty.png
