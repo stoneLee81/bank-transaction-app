@@ -2,8 +2,16 @@
 # FVM Version Cache
 .fvm/
 
-# Flutter build outputs
-frontend/build/
+# Flutter build outputs (keep web build for Docker)
+frontend/build/android/
+frontend/build/ios/
+frontend/build/windows/
+frontend/build/macos/
+frontend/build/linux/
+# Keep frontend/build/web for Docker deployment
+frontend/.dart_tool/
+frontend/.flutter-plugins
+frontend/.flutter-plugins-dependencies
 backend/target/
 
 # IDE files
